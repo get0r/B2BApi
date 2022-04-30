@@ -1,8 +1,11 @@
-const USER_ROUTES = {
-  SIGNUP: '/signup',
-  SIGNIN: '/signin',
+const AUTH_ROUTES = {
+  REGISTER: '/register',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  FORGOT_PASSWORD: '/forgot_password',
+  NEW_PASSWORD: '/new_password',
 };
 
 module.exports = {
-  USER_ROUTES,
+  AUTH_ROUTES,
 };

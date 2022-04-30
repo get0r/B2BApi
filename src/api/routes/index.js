@@ -6,7 +6,7 @@ const indexRouter = express.Router();
 const v1IndexRouter = express.Router();
 
 // version 1 - router all routes
-v1IndexRouter.use(authRouter);
+v1IndexRouter.use('/auth', authRouter);
 
 indexRouter.use('/v1', v1IndexRouter);
 
