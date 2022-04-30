@@ -8,12 +8,10 @@ const adminSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 255,
   },
-  username: {
+  email: {
     type: String,
     trim: true,
     required: true,
-    minlength: 3,
-    maxlength: 100,
   },
 
   password: {
@@ -22,6 +20,12 @@ const adminSchema = new mongoose.Schema({
     minlength: 8,
     maxlength: 255,
   },
+
+  isAdmin: {
+    type: Boolean,
+    default: true,
+  },
+
 });
 
 const AdminModel = mongoose.model('Admin', adminSchema);

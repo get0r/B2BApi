@@ -12,33 +12,29 @@ const {
   HTTP_NOT_FOUND,
 } = require('../../utils/httpResponse');
 
-const userSignUp = catchAsync(async (req, res) => {
-  const userInfo = req.body;
-  const user = await AuthServices.signUp(userInfo);
+const registerBusiness = catchAsync(async (req, res) => {
+  const businessInfo = req.body;
+  const business = await AuthServices.register(businessInfo);
 
-  if (!user) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'username already exists');
+  if (!business) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'email already exists');
 
-  const token = AuthServices.generateAuthToken(user._id, user.username);
+  appLogger.info(`Business Registration Successful businessId ${user._id}`);
 
-  //  place the token on the cookie and send the user
-  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: true });
-  appLogger.info(`User Registration Successful userId ${user._id}`);
-
-  return sendSuccessResponse(res, { ..._.pick(user, ['_id', 'name', 'username']), token });
+  return sendSuccessResponse(res, 'Registered Successfully! Please Wait for approval email.');
 });
 
-const userSignIn = catchAsync(async (req, res) => {
+const login = catchAsync(async (req, res) => {
   const userInfo = req.body;
-  const user = await AuthServices.signIn(userInfo);
+  const user = await AuthServices.login(userInfo);
 
-  if (!user) return sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'username or password incorrect!');
+  if (!user) return sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'email or password incorrect!');
 
-  const token = AuthServices.generateAuthToken(user._id, user.username);
+  const token = AuthServices.generateAuthToken(user._id, user.email, user.isAdmin ? 'admin' : 'business');
   //  place the token on the cookie and send the user
   res.cookie('token', token, { httpOnly: true, secure: true, sameSite: true });
-  appLogger.info(`User SignIn Successful userId ${user._id}`);
+  appLogger.info(`User login Successful userId ${user._id}`);
 
-  return sendSuccessResponse(res, { ..._.pick(user, ['_id', 'name', 'username']), token });
+  return sendSuccessResponse(res, { ..._.pick(user, ['_id', 'name', 'email']), token });
 });
 
 const getUser = catchAsync(async (req, res) => {
@@ -51,7 +47,7 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  userSignUp,
-  userSignIn,
+  registerBusiness,
+  login,
   getUser,
 };

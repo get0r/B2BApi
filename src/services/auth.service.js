@@ -1,17 +1,18 @@
 const JWT = require('jsonwebtoken');
 const config = require('../config');
+const AdminModel = require('../database/models/admin.model');
+const BusinessModel = require('../database/models/business.model');
 
-const UserModel = require('../database/models/user.model');
 const { hashString, compareHash } = require('../utils/hashGenerator');
 
-const signUp = async (userInfo) => {
+const register = async (userInfo) => {
   const { name, username, password } = userInfo;
 
-  const userExists = await UserModel.findOne({ username }).lean();
+  const userExists = await BusinessModel.findOne({ username }).lean();
   if (userExists) return null;
 
   const hashedPassword = await hashString(password, 10);
-  const newUser = new UserModel({
+  const newUser = new BusinessModel({
     name,
     username,
     password: hashedPassword,
@@ -22,11 +23,12 @@ const signUp = async (userInfo) => {
   return savedUser;
 };
 
-const signIn = async ({ username, password }) => {
-  const user = await UserModel.findOne({ username }).lean();
+const loginUser = async ({ email, password }) => {
+  let user = await BusinessModel.findOne({ email }).lean();
   //   user doesn't exist so stop proceeding.
   if (!user) {
-    return null;
+    user = await AdminModel.findOne({ email }).lean();
+    if (!user) return null;
   }
 
   const isPasswordRight = await compareHash(password, user.password);
@@ -39,7 +41,7 @@ const signIn = async ({ username, password }) => {
 };
 
 const getUser = async (userId) => {
-  const user = await UserModel.findOne({ _id: userId }).lean();
+  const user = await BusinessModel.findOne({ _id: userId }).lean();
   //   user doesn't exist so stop proceeding.
   if (!user) {
     return null;
@@ -48,14 +50,14 @@ const getUser = async (userId) => {
   return user;
 };
 
-const generateAuthToken = (userId, username) => {
-  const payload = { id: userId, username };
+const generateAuthToken = (userId, email, role) => {
+  const payload = { id: userId, email, role };
   return JWT.sign(payload, config.tokenSecret, { expiresIn: '48h' });
 };
 
 module.exports = {
-  signUp,
-  signIn,
+  register,
+  loginUser,
   getUser,
   generateAuthToken,
 };
