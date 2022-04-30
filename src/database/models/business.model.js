@@ -1,5 +1,25 @@
 const mongoose = require('mongoose');
 
+const paymentSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Bank', 'Credit Card', 'Paypal'],
+    required: true,
+  },
+
+  accNoOrId: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+
+  holderName: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+});
+
 const businessSchema = new mongoose.Schema({
   bName: {
     type: String,
@@ -122,26 +142,6 @@ const businessSchema = new mongoose.Schema({
   },
 
   paymentInfo: [paymentSchema],
-});
-
-const paymentSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['Bank', 'Credit Card', 'Paypal'],
-    required: true,
-  },
-
-  accNoOrId: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-
-  holderName: {
-    type: String,
-    trim: true,
-    required: true,
-  },
 });
 
 const BusinessModel = mongoose.model('Business', businessSchema);
