@@ -21,7 +21,7 @@ const paymentSchema = new mongoose.Schema({
 });
 
 const businessSchema = new mongoose.Schema({
-  bName: {
+  name: {
     type: String,
     trim: true,
     required: true,
