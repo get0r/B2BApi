@@ -124,6 +124,12 @@ const productSchema = new mongoose.Schema(
     guarantee: {
       type: String,
     },
+
+    isBanned: {
+      type: Boolean,
+      default: false,
+    },
+
   },
   {
     timestamps: true,

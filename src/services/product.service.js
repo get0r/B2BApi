@@ -1,6 +1,7 @@
 const RootServices = require('./root.service');
 const BusinessService = require('./business.service');
 const ProductModel = require('../database/models/product.model');
+const AdProductModel = require('../database/models/ad.products.model');
 
 const create = async (productInfo) => {
   const newProduct = new ProductModel(productInfo);
@@ -38,27 +39,40 @@ const getRecommendedProducts = async (ownerId, sort = {}, page = 1) => {
   return recommendedProducts;
 };
 
-// const banUnbanOne = async (bId) => {
-//   const product = await getOne(bId);
-//   if (!product) return null;
+const banUnbanOne = async (bId) => {
+  const product = await getOne(bId);
+  if (!product) return null;
 
-//   const isUpdated = await updateOne(bId, { isBanned: !product.isBanned });
-//   if (!isUpdated) return null;
-//   return true;
-// };
+  const isUpdated = await updateOne(bId, { isBanned: !product.isBanned });
+  if (!isUpdated) return null;
+  return true;
+};
 
-// const removeOne = async (bId) => {
-//   const product = await getOne(bId);
-//   if (!product) return null;
-//   await productModel.deleteOne({ _id: bId });
-//   return true;
-// };
+const removeOne = async (bId) => {
+  const product = await getOne(bId);
+  if (!product) return null;
+  await ProductModel.deleteOne({ _id: bId });
+  return true;
+};
 
-// const getTopSellers = async (page = 1) => {
-//   const topproduct = await RootServices
-//     .getOperatedData(productModel, {}, { availableBalance: 1 }, page);
-//   return topproduct;
-// };
+const setAdProduct = async (pId, startDate, endDate, priority) => {
+  const adProduct = new AdProductModel({
+    productId: pId,
+    startDate,
+    endDate,
+    priority,
+  });
+
+  const savedAdProduct = await adProduct.save();
+
+  return savedAdProduct;
+};
+const getAdProducts = async (page = 1) => {
+  const adProducts = await RootServices
+    .getOperatedData(AdProductModel, {}, { priority: 1 }, page);
+
+  return adProducts;
+};
 
 module.exports = {
   create,
@@ -66,7 +80,8 @@ module.exports = {
   getOne,
   updateOne,
   getRecommendedProducts,
-//   banUnbanOne,
-//   getTopSellers,
-//   removeOne,
+  banUnbanOne,
+  setAdProduct,
+  getAdProducts,
+  removeOne,
 };

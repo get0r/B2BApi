@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const adProductSchema = new mongoose.Schema({
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
-
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
