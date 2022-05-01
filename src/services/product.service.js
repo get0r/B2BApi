@@ -1,4 +1,5 @@
 const RootServices = require('./root.service');
+const BusinessService = require('./business.service');
 const ProductModel = require('../database/models/product.model');
 
 const create = async (productInfo) => {
@@ -29,11 +30,13 @@ const updateOne = async (bId, newInfo) => {
   return true;
 };
 
-// const approveOne = async (bId) => {
-//   const isUpdated = await updateOne(bId, { isApproved: true });
-//   if (!isUpdated) return null;
-//   return true;
-// };
+const getRecommendedProducts = async (ownerId, sort = {}, page = 1) => {
+  const owner = await BusinessService.getOne(ownerId);
+  const recommendedProducts = await RootServices
+    .getOperatedData(ProductModel, { categoryId: { $in: owner.tagIds } }, sort, page);
+
+  return recommendedProducts;
+};
 
 // const banUnbanOne = async (bId) => {
 //   const product = await getOne(bId);
@@ -62,7 +65,7 @@ module.exports = {
   getAll,
   getOne,
   updateOne,
-//   approveOne,
+  getRecommendedProducts,
 //   banUnbanOne,
 //   getTopSellers,
 //   removeOne,
