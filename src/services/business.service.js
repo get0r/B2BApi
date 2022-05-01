@@ -21,6 +21,21 @@ const updateOne = async (bId, newInfo) => {
   return true;
 };
 
+const approveOne = async (bId) => {
+  const isUpdated = await updateOne(bId, { isApproved: true });
+  if (!isUpdated) return null;
+  return true;
+};
+
+const banUnbanOne = async (bId) => {
+  const business = await getOne(bId);
+  if (!business) return null;
+
+  const isUpdated = await updateOne(bId, { isBanned: !business.isBanned });
+  if (!isUpdated) return null;
+  return true;
+};
+
 const removeOne = async (bId) => {
   const business = await getOne(bId);
   if (!business) return null;
@@ -32,5 +47,7 @@ module.exports = {
   getAll,
   getOne,
   updateOne,
+  approveOne,
+  banUnbanOne,
   removeOne,
 };
