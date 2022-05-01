@@ -14,20 +14,20 @@ const getAll = async (query = {}, sort = {}, page = 1) => {
   return products;
 };
 
-// const getOne = async (bId) => {
-//   const business = await BusinessModel.findById(bId).lean();
+const getOne = async (bId) => {
+  const product = await ProductModel.findById(bId).lean();
 
-//   if (!business) return null;
-//   return business;
-// };
+  if (!product) return null;
+  return product;
+};
 
-// const updateOne = async (bId, newInfo) => {
-//   const business = await getOne(bId);
-//   if (!business) return null;
-//   const updateInfo = { ...business, ...newInfo };
-//   await BusinessModel.updateOne({ _id: bId }, updateInfo);
-//   return true;
-// };
+const updateOne = async (bId, newInfo) => {
+  const product = await getOne(bId);
+  if (!product) return null;
+  const updateInfo = { ...product, ...newInfo };
+  await ProductModel.updateOne({ _id: bId }, updateInfo);
+  return true;
+};
 
 // const approveOne = async (bId) => {
 //   const isUpdated = await updateOne(bId, { isApproved: true });
@@ -36,32 +36,32 @@ const getAll = async (query = {}, sort = {}, page = 1) => {
 // };
 
 // const banUnbanOne = async (bId) => {
-//   const business = await getOne(bId);
-//   if (!business) return null;
+//   const product = await getOne(bId);
+//   if (!product) return null;
 
-//   const isUpdated = await updateOne(bId, { isBanned: !business.isBanned });
+//   const isUpdated = await updateOne(bId, { isBanned: !product.isBanned });
 //   if (!isUpdated) return null;
 //   return true;
 // };
 
 // const removeOne = async (bId) => {
-//   const business = await getOne(bId);
-//   if (!business) return null;
-//   await BusinessModel.deleteOne({ _id: bId });
+//   const product = await getOne(bId);
+//   if (!product) return null;
+//   await productModel.deleteOne({ _id: bId });
 //   return true;
 // };
 
 // const getTopSellers = async (page = 1) => {
-//   const topBusiness = await RootServices
-//     .getOperatedData(BusinessModel, {}, { availableBalance: 1 }, page);
-//   return topBusiness;
+//   const topproduct = await RootServices
+//     .getOperatedData(productModel, {}, { availableBalance: 1 }, page);
+//   return topproduct;
 // };
 
 module.exports = {
   create,
   getAll,
-//   getOne,
-//   updateOne,
+  getOne,
+  updateOne,
 //   approveOne,
 //   banUnbanOne,
 //   getTopSellers,
