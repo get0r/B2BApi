@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const CategoryModel = require('../database/models/category.model');
 
 const PAGE_SIZE = 10;
@@ -12,11 +13,24 @@ const create = async (catInfo) => {
 
 const getAll = async (query = {}, sort = {}, page = 1) => {
   const skip = (page - 1) * PAGE_SIZE;
-  const categories = await CategoryModel.find(query)
-    .skip(skip)
-    .sort(sort)
-    .limit(PAGE_SIZE)
-    .lean();
+  let finalQuery = query;
+  let categories = [];
+  if (query && query.q) {
+    const searchQuery = { $text: { $search: query.q } };
+    const fieldAdd = { score: { $meta: 'textScore' } };
+    finalQuery = _.omit(query, ['q']);
+    categories = await CategoryModel.find({ ...searchQuery, ...finalQuery }, fieldAdd)
+      .skip(skip)
+      .sort(sort)
+      .limit(PAGE_SIZE)
+      .lean();
+  } else {
+    categories = await CategoryModel.find(finalQuery)
+      .skip(skip)
+      .sort(sort)
+      .limit(PAGE_SIZE)
+      .lean();
+  }
 
   return categories;
 };
