@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const PAGE_SIZE = 10;
 
 const getOperatedData = async (DBmodel, query = {}, sort = {}, page = 1) => {
