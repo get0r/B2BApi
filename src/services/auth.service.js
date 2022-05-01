@@ -1,26 +1,24 @@
 const JWT = require('jsonwebtoken');
+const _ = require('lodash');
+
 const config = require('../config');
 const AdminModel = require('../database/models/admin.model');
 const BusinessModel = require('../database/models/business.model');
 
 const { hashString, compareHash } = require('../utils/hashGenerator');
 
-const register = async (userInfo) => {
-  const { name, username, password } = userInfo;
+const register = async (businessInfo) => {
+  const { email, password } = businessInfo;
 
-  const userExists = await BusinessModel.findOne({ username }).lean();
-  if (userExists) return null;
+  const businessExists = await BusinessModel.findOne({ email }).lean();
+  if (businessExists) return null;
 
   const hashedPassword = await hashString(password, 10);
-  const newUser = new BusinessModel({
-    name,
-    username,
-    password: hashedPassword,
-  });
+  const newBusiness = new BusinessModel({ ...businessInfo, password: hashedPassword });
 
-  const savedUser = await newUser.save();
+  const savedBusiness = await newBusiness.save();
 
-  return savedUser;
+  return savedBusiness;
 };
 
 const loginUser = async ({ email, password }) => {
@@ -37,7 +35,7 @@ const loginUser = async ({ email, password }) => {
     return null;
   }
 
-  return user;
+  return _.omit(user, ['password', '__v']);
 };
 
 const getUser = async (userId) => {
