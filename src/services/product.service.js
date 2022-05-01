@@ -67,11 +67,18 @@ const setAdProduct = async (pId, startDate, endDate, priority) => {
 
   return savedAdProduct;
 };
+
 const getAdProducts = async (page = 1) => {
   const adProducts = await RootServices
     .getOperatedData(AdProductModel, {}, { priority: 1 }, page);
 
   return adProducts;
+};
+
+const rateProduct = async (score, raterId) => {
+  // TODO: get last order id if not found return null
+  // TODO: set to db rating
+  // TODO: calculate the average score and set ratingScore
 };
 
 module.exports = {
