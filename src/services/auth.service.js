@@ -48,6 +48,15 @@ const getUser = async (userId) => {
   return user;
 };
 
+const resetPassword = async (userId, newPassword) => {
+  const user = getUser(userId);
+  if (!user) return null;
+  const hashedPassword = await hashString(newPassword, 10);
+  user.password = hashedPassword;
+  await BusinessModel.updateOne({ _id: user._id }, user);
+  return true;
+};
+
 const generateAuthToken = (userId, email, role) => {
   const payload = { id: userId, email, role };
   return JWT.sign(payload, config.tokenSecret, { expiresIn: '48h' });
@@ -58,4 +67,5 @@ module.exports = {
   loginUser,
   getUser,
   generateAuthToken,
+  resetPassword,
 };
