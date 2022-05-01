@@ -142,6 +142,17 @@ const businessSchema = new mongoose.Schema({
   },
 
   paymentInfo: [paymentSchema],
+
+  availableBalance: {
+    type: Number,
+    default: 0,
+  },
+
+  isApproved: {
+    type: Boolean,
+    default: false,
+  },
+
 });
 
 const BusinessModel = mongoose.model('Business', businessSchema);
