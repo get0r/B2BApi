@@ -43,11 +43,17 @@ const removeOne = async (bId) => {
   return true;
 };
 
+const getTopSellers = async (page = 1) => {
+  const topBusiness = await RootServices
+    .getOperatedData(BusinessModel, {}, { availableBalance: 1 }, page);
+  return topBusiness;
+};
 module.exports = {
   getAll,
   getOne,
   updateOne,
   approveOne,
   banUnbanOne,
+  getTopSellers,
   removeOne,
 };
