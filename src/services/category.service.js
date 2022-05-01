@@ -1,4 +1,4 @@
-const CategoryModel = require('../database/models/business.model');
+const CategoryModel = require('../database/models/category.model');
 
 const PAGE_SIZE = 10;
 
@@ -28,8 +28,17 @@ const getOne = async (catId) => {
   return cat;
 };
 
+const updateOne = async (catId, newInfo) => {
+  const cat = await getOne(catId);
+  if (!cat) return null;
+  const updateInfo = { ...cat, ...newInfo };
+  await CategoryModel.updateOne({ _id: catId }, updateInfo);
+  return true;
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
+  updateOne,
 };
