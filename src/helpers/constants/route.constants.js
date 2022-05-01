@@ -6,6 +6,11 @@ const AUTH_ROUTES = {
   NEW_PASSWORD: '/new_password',
 };
 
+const CATEGORY_ROUTES = {
+  CATEGORIES: '/categories',
+};
+
 module.exports = {
   AUTH_ROUTES,
+  CATEGORY_ROUTES,
 };
