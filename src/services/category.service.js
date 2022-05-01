@@ -36,9 +36,17 @@ const updateOne = async (catId, newInfo) => {
   return true;
 };
 
+const removeOne = async (catId) => {
+  const cat = await getOne(catId);
+  if (!cat) return null;
+  await CategoryModel.deleteOne({ _id: catId });
+  return true;
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   updateOne,
+  removeOne,
 };
