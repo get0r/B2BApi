@@ -6,31 +6,31 @@ const getAll = async (query = {}, sort = {}, page = 1) => {
   return businesses;
 };
 
-// const getOne = async (catId) => {
-//   const cat = await CategoryModel.findById(catId).lean();
+const getOne = async (bId) => {
+  const business = await BusinessModel.findById(bId).lean();
 
-//   if (!cat) return null;
-//   return cat;
-// };
+  if (!business) return null;
+  return business;
+};
 
-// const updateOne = async (catId, newInfo) => {
-//   const cat = await getOne(catId);
-//   if (!cat) return null;
-//   const updateInfo = { ...cat, ...newInfo };
-//   await CategoryModel.updateOne({ _id: catId }, updateInfo);
-//   return true;
-// };
+const updateOne = async (bId, newInfo) => {
+  const business = await getOne(bId);
+  if (!business) return null;
+  const updateInfo = { ...business, ...newInfo };
+  await BusinessModel.updateOne({ _id: bId }, updateInfo);
+  return true;
+};
 
-// const removeOne = async (catId) => {
-//   const cat = await getOne(catId);
-//   if (!cat) return null;
-//   await CategoryModel.deleteOne({ _id: catId });
-//   return true;
-// };
+const removeOne = async (bId) => {
+  const business = await getOne(bId);
+  if (!business) return null;
+  await BusinessModel.deleteOne({ _id: bId });
+  return true;
+};
 
 module.exports = {
   getAll,
-//   getOne,
-//   updateOne,
-//   removeOne,
+  getOne,
+  updateOne,
+  removeOne,
 };
