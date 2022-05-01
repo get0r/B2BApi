@@ -10,14 +10,18 @@ const categorySchema = new mongoose.Schema({
   },
   parent: {
     type: mongoose.Schema.Types.ObjectId,
-    trim: true,
-    required: true,
+    default: null,
   },
 
   path: {
     type: String,
     required: true,
   },
+
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
 });
 
 const CategoryModel = mongoose.model('Category', categorySchema);
