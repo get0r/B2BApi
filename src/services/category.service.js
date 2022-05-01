@@ -21,7 +21,15 @@ const getAll = async (query = {}, sort = {}, page = 1) => {
   return categories;
 };
 
+const getOne = async (catId) => {
+  const cat = await CategoryModel.findById(catId).lean();
+
+  if (!cat) return null;
+  return cat;
+};
+
 module.exports = {
   create,
   getAll,
+  getOne,
 };
