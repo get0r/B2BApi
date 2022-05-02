@@ -2,6 +2,7 @@ const JWT = require('jsonwebtoken');
 const _ = require('lodash');
 
 const config = require('../config');
+const BusinessService = require('./business.service');
 const AdminModel = require('../database/models/admin.model');
 const BusinessModel = require('../database/models/business.model');
 
@@ -38,18 +39,8 @@ const loginUser = async ({ email, password }) => {
   return _.omit(user, ['password', '__v']);
 };
 
-const getUser = async (userId) => {
-  const user = await BusinessModel.findOne({ _id: userId }).lean();
-  //   user doesn't exist so stop proceeding.
-  if (!user) {
-    return null;
-  }
-
-  return user;
-};
-
 const resetPassword = async (userId, newPassword) => {
-  const user = getUser(userId);
+  const user = BusinessService.getOne(userId);
   if (!user) return null;
   const hashedPassword = await hashString(newPassword, 10);
   user.password = hashedPassword;
@@ -65,7 +56,6 @@ const generateAuthToken = (userId, email, role) => {
 module.exports = {
   register,
   loginUser,
-  getUser,
   generateAuthToken,
   resetPassword,
 };
