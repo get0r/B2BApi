@@ -3,22 +3,22 @@ const express = require('express');
 // const AuthController = require('../../controller/auth.controller');
 // const AuthValidator = require('../../middlewares/validation/auth.validator');
 
-const { ORDER_ROUTES, withId } = require('../../../helpers/constants/route.constants');
+const { ORDER_ROUTES, ROUTES, withId } = require('../../../helpers/constants/route.constants');
 // const { validateAsync } = require('../../middlewares/validation/joi.validator');
 
 const orderRouter = express.Router();
 
 orderRouter
-  .post(ORDER_ROUTES.ORDERS, (req, res) => res.send(`${req.url} working!`));
+  .post(ROUTES.ROOT, (req, res) => res.send(`${req.url} working!`));
 
 orderRouter
-  .put(withId(ORDER_ROUTES.ORDERS, 'oId'), (req, res) => res.send(`${req.url} working!`));
+  .put(withId(ROUTES.ROOT, 'oId'), (req, res) => res.send(`${req.url} working!`));
 
 orderRouter
-  .get(withId(ORDER_ROUTES.ORDERS, 'oId'), (req, res) => res.send(`${req.url} working!`));
+  .get(withId(ROUTES.ROOT, 'oId'), (req, res) => res.send(`${req.url} working!`));
 
 orderRouter
-  .get(`${withId(ORDER_ROUTES.ORDERS, 'cId')}/setAd`, (req, res) => res.send(`${req.url} working!`));
+  .get(`${withId(ROUTES.ROOT, 'cId')}/setAd`, (req, res) => res.send(`${req.url} working!`));
 
 orderRouter
   .get(withId(ORDER_ROUTES.RETURN_REQ, 'cId'), (req, res) => res.send(`${req.url} working!`));
