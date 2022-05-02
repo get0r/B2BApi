@@ -5,7 +5,6 @@ const express = require('express');
 
 const { PRODUCT_ROUTES, withId } = require('../../../helpers/constants/route.constants');
 // const { validateAsync } = require('../../middlewares/validation/joi.validator');
-// const { registerSchema, loginSchema } = require('../../../database/validationSchemas/auth.joi.schema');
 
 const productRouter = express.Router();
 
