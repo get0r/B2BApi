@@ -7,6 +7,7 @@ const businessRouter = require('./v1/business.routes');
 const orderRouter = require('./v1/order.routes');
 const shippingRouter = require('./v1/shipping.routes');
 const transactionRouter = require('./v1/transaction.routes');
+const inventoryRouter = require('./v1/inventory.routes');
 
 const {
   PRODUCT_ROUTES,
@@ -15,6 +16,7 @@ const {
   SHIPPING_ROUTES,
   CATEGORY_ROUTES,
   TRANSACTION_ROUTES,
+  INVENTORY_ROUTES,
 } = require('../../helpers/constants/route.constants');
 
 const indexRouter = express.Router();
@@ -28,6 +30,7 @@ v1IndexRouter.use(ORDER_ROUTES.ORDERS, orderRouter);
 v1IndexRouter.use(BUSINESS_ROUTES.BUSINESS, businessRouter);
 v1IndexRouter.use(SHIPPING_ROUTES.SHIPPING, shippingRouter);
 v1IndexRouter.use(TRANSACTION_ROUTES.TRANSACTION, transactionRouter);
+v1IndexRouter.use(INVENTORY_ROUTES.INVENTORIES, inventoryRouter);
 
 indexRouter.use('/v1', v1IndexRouter);
 
