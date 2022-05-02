@@ -1,16 +1,26 @@
 const express = require('express');
 
-// const CategoryController = require('../../controller/auth.controller');
+// const AuthController = require('../../controller/auth.controller');
 // const AuthValidator = require('../../middlewares/validation/auth.validator');
 
-const { CATEGORY_ROUTES } = require('../../../helpers/constants/route.constants');
+const { BUSINESS_ROUTES, ROUTES, withId } = require('../../../helpers/constants/route.constants');
+// const { validateAsync } = require('../../middlewares/validation/joi.validator');
 
 const categoryRouter = express.Router();
 
 categoryRouter
-  .post(CATEGORY_ROUTES.CATEGORIES, CategoryController.createCategory);
+  .post(ROUTES.ROOT, (req, res) => res.send(`${req.url} working!`));
 
 categoryRouter
-  .get(CATEGORY_ROUTES.CATEGORIES, CategoryController.getAllCategories);
+  .put(withId(ROUTES.ROOT, 'catId'), (req, res) => res.send(`${req.url} working!`));
+
+categoryRouter
+  .get(withId(ROUTES.ROOT, 'catId'), (req, res) => res.send(`${req.url} working!`));
+
+categoryRouter
+  .get(ROUTES.ROOT, (req, res) => res.send(`${req.url} working!`));
+
+categoryRouter
+  .delete(withId(ROUTES.ROOT, 'catId'), (req, res) => res.send(`${req.url} working!`));
 
 module.exports = categoryRouter;
