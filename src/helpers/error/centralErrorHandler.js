@@ -20,7 +20,7 @@ const centralErrorHandler = (err) => {
   };
 
   if (isErrorOperational(err)) {
-    return appLogger.warn(JSON.stringify(_.pick(error, ['type', 'message'])));
+    return appLogger.warn(JSON.stringify(_.pick(error, ['type', 'message', 'stack'])));
   }
   appLogger.error(JSON.stringify(error));
   //  send message notification email(sms).

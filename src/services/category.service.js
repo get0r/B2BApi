@@ -1,7 +1,5 @@
-const _ = require('lodash');
+const RootService = require('./root.service');
 const CategoryModel = require('../database/models/category.model');
-
-const PAGE_SIZE = 10;
 
 const create = async (catInfo) => {
   const newCat = new CategoryModel(catInfo);
@@ -12,25 +10,7 @@ const create = async (catInfo) => {
 };
 
 const getAll = async (query = {}, sort = {}, page = 1) => {
-  const skip = (page - 1) * PAGE_SIZE;
-  let finalQuery = query;
-  let categories = [];
-  if (query && query.q) {
-    const searchQuery = { $text: { $search: query.q } };
-    const fieldAdd = { score: { $meta: 'textScore' } };
-    finalQuery = _.omit(query, ['q']);
-    categories = await CategoryModel.find({ ...searchQuery, ...finalQuery }, fieldAdd)
-      .skip(skip)
-      .sort(sort)
-      .limit(PAGE_SIZE)
-      .lean();
-  } else {
-    categories = await CategoryModel.find(finalQuery)
-      .skip(skip)
-      .sort(sort)
-      .limit(PAGE_SIZE)
-      .lean();
-  }
+  const categories = await RootService.getOperatedData(CategoryModel, query, sort, page);
 
   return categories;
 };

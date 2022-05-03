@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const CategoryService = require('../../services/category.service');
 
@@ -21,13 +22,33 @@ const createCategory = catchAsync(async (req, res) => {
   return sendSuccessResponse(res, cat);
 });
 
-const getAllCategories = catchAsync(async (req, res) => {
-  const categories = await CategoryService.getAll();
+const getCategories = catchAsync(async (req, res) => {
+  let categories;
+  if (req.params.catId) {
+    categories = await CategoryService.getOne(req.params.catId);
+    if (!categories) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Category not found!');
+    return sendSuccessResponse(res, categories);
+  }
+  categories = await CategoryService.getAll(_.omit(req.query, ['sort', 'page']), req.query.sort, Number.parseInt(req.query.page, 10));
 
   return sendSuccessResponse(res, categories);
 });
 
+const updateCategory = catchAsync(async (req, res) => {
+  const updated = await CategoryService.updateOne(req.params.catId, req.body);
+
+  return sendSuccessResponse(res, updated);
+});
+
+const removeCategory = catchAsync(async (req, res) => {
+  const removed = await CategoryService.removeOne(req.params.catId);
+
+  return sendSuccessResponse(res, removed);
+});
+
 module.exports = {
   createCategory,
-  getAllCategories,
+  updateCategory,
+  removeCategory,
+  getCategories,
 };

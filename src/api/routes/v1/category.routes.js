@@ -13,15 +13,15 @@ categoryRouter
   .post(ROUTES.ROOT, authUser, CategoryController.createCategory);
 
 categoryRouter
-  .put(withId(ROUTES.ROOT, 'catId'), authUser, (req, res) => res.send(`${req.url} working!`));
+  .put(withId(ROUTES.ROOT, 'catId'), authUser, CategoryController.updateCategory);
 
 categoryRouter
-  .get(withId(ROUTES.ROOT, 'catId'), (req, res) => res.send(`${req.url} working!`));
+  .get(withId(ROUTES.ROOT, 'catId'), CategoryController.getCategories);
 
 categoryRouter
-  .get(ROUTES.ROOT, (req, res) => res.send(`${req.url} working!`));
+  .get(ROUTES.ROOT, CategoryController.getCategories);
 
 categoryRouter
-  .delete(withId(ROUTES.ROOT, 'catId'), authUser, (req, res) => res.send(`${req.url} working!`));
+  .delete(withId(ROUTES.ROOT, 'catId'), authUser, CategoryController.removeCategory);
 
 module.exports = categoryRouter;

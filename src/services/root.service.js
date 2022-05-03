@@ -3,7 +3,18 @@ const _ = require('lodash');
 const PAGE_SIZE = 10;
 
 const getOperatedData = async (DBmodel, query = {}, sort = {}, page = 1) => {
-  const skip = (page - 1) * PAGE_SIZE;
+  const skip = page ? (+page - 1) * PAGE_SIZE : 1;
+  let finalSort = sort;
+  if (finalSort instanceof String) {
+    finalSort = {};
+    const tempSort = sort.split(',');
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item of tempSort) {
+      const str = item.slice(0, -1);
+      finalSort[str] = item.slice(-1) === '-' ? -1 : 1;
+    }
+  }
+
   let finalQuery = query;
   let data = [];
   if (query && query.q) {
@@ -12,13 +23,13 @@ const getOperatedData = async (DBmodel, query = {}, sort = {}, page = 1) => {
     finalQuery = _.omit(query, ['q']);
     data = await DBmodel.find({ ...searchQuery, ...finalQuery }, fieldAdd)
       .skip(skip)
-      .sort(sort)
+      .sort(finalSort)
       .limit(PAGE_SIZE)
       .lean();
   } else {
     data = await DBmodel.find(finalQuery)
       .skip(skip)
-      .sort(sort)
+      .sort(finalSort)
       .limit(PAGE_SIZE)
       .lean();
   }

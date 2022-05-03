@@ -48,6 +48,13 @@ module.exports = (app) => {
   //  connect all app routes version 1.
   app.use('/api', apiRoutes);
 
+  /// TESSSSSSSSTTTT CENTER
+
+  const OrderController = require('../../api/controller/order.controller');
+
+  app.post('/test-order', OrderController.create);
+  /// TESSSSSSSST CENTER
+
   // ---non existent route
   app.all('*', (req, res, next) => {
     next(

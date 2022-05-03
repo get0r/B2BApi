@@ -13,9 +13,9 @@ const catchAsync = (fn) => (req, res, next) => {
     .catch((err) => {
       switch (err.constructor) {
         case Joi.ValidationError:
-          return next(new ValidationError(err.message));
+          return next(new ValidationError(err));
         default:
-          return next(new ApiError(err.message));
+          return next(new ApiError(err));
       }
     });
 };

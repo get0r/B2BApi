@@ -11,8 +11,6 @@ global.server = app.listen(port, () => {
 
 /// TESSSSSSSSTTTT CENTER
 
-const ProductService = require('./services/product.service');
-
 // CategoryService.getAll({ q: 'Agriculture', path: 'Agriculture' }, { path: 1 }).then((res) => console.log(res));
 // AuthService.resetPassword('626e5867f9fda75ea0212946', '123456789').then((res) => console.log(res));
 // BusinessService.getTopSellers().then((res) => console.log(res));
