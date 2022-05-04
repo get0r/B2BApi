@@ -21,6 +21,7 @@ const PRODUCT_ROUTES = {
 const BUSINESS_ROUTES = {
   BUSINESS: '/business',
   BUSINESS_APPROVE: '/approve',
+  BUSINESS_BANUNBAN: '/ban-unban',
 };
 
 const ORDER_ROUTES = {

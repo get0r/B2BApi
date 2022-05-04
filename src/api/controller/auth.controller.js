@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const AuthServices = require('../../services/auth.service');
 
@@ -16,7 +17,7 @@ const registerBusiness = catchAsync(async (req, res) => {
 
   if (!business) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'email already exists');
 
-  appLogger.info(`Business Registration Successful businessId ${user._id}`);
+  appLogger.info(`Business Registration Successful businessId ${business._id}`);
 
   return sendSuccessResponse(res, 'Registered Successfully! Please Wait for approval email.');
 });
