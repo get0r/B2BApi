@@ -75,7 +75,7 @@ const getAdProducts = async (page = 1) => {
   return adProducts;
 };
 
-const rateProduct = async (score, raterId) => {
+const rateProduct = async (productId, score, raterId) => {
   // TODO: get last order id if not found return null
   // TODO: set to db rating
   // TODO: calculate the average score and set ratingScore
@@ -91,4 +91,5 @@ module.exports = {
   setAdProduct,
   getAdProducts,
   removeOne,
+  rateProduct,
 };

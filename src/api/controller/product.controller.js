@@ -58,7 +58,7 @@ const setProductAd = catchAsync(async (req, res) => {
 });
 
 const getRecommendedProducts = catchAsync(async (req, res) => {
-  const recommended = await ProductService.getRecommendedProducts(req.params.bId);
+  const recommended = await ProductService.getRecommendedProducts(req.userId);
 
   return sendSuccessResponse(res, recommended);
 });
@@ -67,6 +67,13 @@ const getAdProducts = catchAsync(async (req, res) => {
   const adProducts = await ProductService.getAdProducts();
 
   return sendSuccessResponse(res, adProducts);
+});
+
+const rateProduct = catchAsync(async (req, res) => {
+  const rated = await ProductService.rateProduct(req.params.pId, req.body.raterId, req.body.score);
+  if (!rated) sendErrorResponse(res, HTTP_BAD_REQUEST, 'Product not found!');
+
+  return sendSuccessResponse(res, rated);
 });
 
 module.exports = {
@@ -78,4 +85,5 @@ module.exports = {
   setProductAd,
   getRecommendedProducts,
   getAdProducts,
+  rateProduct,
 };
