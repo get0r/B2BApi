@@ -3,9 +3,9 @@ const _ = require('lodash');
 const PAGE_SIZE = 10;
 
 const getOperatedData = async (DBmodel, query = {}, sort = {}, page = 1) => {
-  const skip = page ? (+page - 1) * PAGE_SIZE : 1;
-  let finalSort = sort;
-  if (finalSort instanceof String) {
+  const skip = page ? (+page - 1) * PAGE_SIZE : 0;
+  let finalSort = {};
+  if (sort instanceof String) {
     finalSort = {};
     const tempSort = sort.split(',');
     // eslint-disable-next-line no-restricted-syntax
