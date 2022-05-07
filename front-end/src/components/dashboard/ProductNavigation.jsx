@@ -5,7 +5,7 @@ let ProductNavigation = function () {
   return (
  
     <nav >
-        <div class="px-30 py-10 sm:px-8 lg:px-16 xl:px-20 mx-auto">
+        <div class="px-10 py-10 sm:px-8 lg:px-16 xl:px-20 mx-auto">
           <div class="w-full md:w-2/3  p-5 rounded-lg bg-white">
           <div class="relative">
           <div class="absolute flex items-center ml-2 h-full">

@@ -1,12 +1,16 @@
 module.exports = {
-  important: true,
-  //Purging for Production is configured in PostCSS Config
-  purge:{    
-    content: ["./src/**/*.html", "./src/**/*.jsx", "./src/**/*.js"],
-  },
+  content: [
+    "./src/**/*.{js,jsx}","./node_modules/flowbite/**/*.js"
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Roboto: ["Roboto", "sans-serif"],
+      },
+    },
   },
-  variants: {},
-  plugins: [],
-};
+  variants: {
+    opacity: ({ after }) => after(['disabled'])
+  },
+  plugins: [require('flowbite/plugin')],
+}
