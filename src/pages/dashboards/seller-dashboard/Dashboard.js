@@ -18,9 +18,12 @@ class Dashboard extends Component {
     RepresentativeName:'Surafel Muluye',
     RepresentativeEmail:'sura@gmail.com',
     RepresentativePosition:'General Manager',
+    RepresentativePhoneNumber:'09XXXXX',
     Status:'Active',
     AccountType:'Supplier',
-    Description:'Endibo Trading is one of ethiopias largest trading cartels which operates in western ethiopia.'
+    Description:'Endibo Trading is one of ethiopias largest trading cartels which operates in western ethiopia.',
+    Certificate:'ISO',
+    CertificateDate:'june 10,2020'
 
   }
   render(){
@@ -120,7 +123,7 @@ class Dashboard extends Component {
               {/* <!-- End of about section --> */}
 
               <div class="my-4"></div>
-      {/* 
+               {/* 
               <!-- Experience and education --> */}
               <div class="rounded-sm bg-white p-3 shadow-sm">
                 <div class="grid grid-cols-2">
@@ -134,9 +137,108 @@ class Dashboard extends Component {
                       <span class="tracking-wide">Products</span>
                     </div>
                     
-                   
-                     
                   </div>
+                  <div className="2x-10 relative overflow-x-auto shadow-md sm:rounded-lg">
+
+                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                       
+           
+                        <th scope="col" className="px-6 py-3">
+                        Product name
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                        Color
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                        Category
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                        Price
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Edit</span>
+                        </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                     
+                        
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        Apple MacBook Pro 17"
+                        </th>
+                        <td className="px-6 py-4">
+                        Sliver
+                        </td>
+                        <td className="px-6 py-4">
+                        Laptop
+                        </td>
+                        <td className="px-6 py-4">
+                        $2999
+                        </td>
+                      
+                        </tr>
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        
+                        
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        Microsoft Surface Pro
+                        </th>
+                        <td className="px-6 py-4">
+                        White
+                        </td>
+                        <td className="px-6 py-4">
+                        Laptop PC
+                        </td>
+                        <td className="px-6 py-4">
+                        $1999
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <a href="#" className="px-2 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>
+                        </td>
+                        </tr>
+                        <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                       
+                     
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        Magic Mouse 2
+                        </th>
+                        <td className="px-6 py-4">
+                        Black
+                        </td>
+                        <td className="px-6 py-4">
+                        Accessories
+                        </td>
+                        <td className="px-6 py-4">
+                        $99
+                        </td>
+                       
+                        </tr>
+                        </tbody>
+                        </table>
+                      </div>
+
+
+
+                      <div class="mb-3 flex items-center space-x-2 font-semibold leading-8 text-gray-900 py-4">
+                      <span clas="text-green-500">
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </span>
+                      <span class="tracking-wide">Certificates</span>
+                    </div>
+                      <div className="2x-10 relative overflow-x-auto shadow-md sm:rounded-lg">
+                      <div class="grid grid-cols-2">
+                       
+                        <div class="px-4 py-2 font-semibold"><a href="#">{this.State.Certificate}</a></div>
+                        <div class="px-4 py-2">{this.State.CertificateDate}</div>
+                      </div>
+                   
+                      </div>
                  
                 </div>
                 {/* <!-- End of Experience and education grid --> */}
