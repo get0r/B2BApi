@@ -14,6 +14,9 @@ const {
 
 const registerBusiness = catchAsync(async (req, res) => {
   const businessInfo = req.body;
+  if (req.file) {
+    businessInfo.logoLink = req.file.path;
+  }
   const business = await AuthServices.register(businessInfo);
 
   if (!business) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'email already exists');

@@ -38,6 +38,7 @@ bower_components
 build/Release
 front-end/
 ./front-end/
+public/
 
 # Dependency directories
 node_modules/

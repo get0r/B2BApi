@@ -92,7 +92,6 @@ const businessSchema = new mongoose.Schema(
 
     licenseLink: {
       type: String,
-      required: true,
     },
 
     companySize: {
@@ -128,7 +127,6 @@ const businessSchema = new mongoose.Schema(
     repTel: {
       type: String,
       trim: true,
-      required: true,
     },
 
     repEmail: {
