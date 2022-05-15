@@ -5,12 +5,13 @@ const ProductController = require('../../controller/product.controller');
 
 const { ROUTES, PRODUCT_ROUTES, withId } = require('../../../helpers/constants/route.constants');
 const { authUser } = require('../../middlewares/auth/auth.middleware');
+const { upload } = require('../../../helpers/file/mutler.storage');
 // const { validateAsync } = require('../../middlewares/validation/joi.validator');
 
 const productRouter = express.Router();
 
 productRouter
-  .post(ROUTES.ROOT, authUser, ProductController.createProduct);
+  .post(ROUTES.ROOT, [authUser, upload.array('productImages')], ProductController.createProduct);
 
 productRouter
   .put(withId(ROUTES.ROOT, 'pId'), authUser, ProductController.updateProduct);
