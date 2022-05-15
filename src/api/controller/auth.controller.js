@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const AuthServices = require('../../services/auth.service');
+const BusinessService = require('../../services/business.service');
 
 const { appLogger } = require('../../helpers/logger/appLogger');
 
@@ -37,7 +38,15 @@ const login = catchAsync(async (req, res) => {
   return sendSuccessResponse(res, { ...user, token });
 });
 
+const getUser = catchAsync(async (req, res) => {
+  const { userId } = req;
+  const user = await BusinessService.getOne(userId);
+
+  return sendSuccessResponse(res, user);
+});
+
 module.exports = {
   registerBusiness,
   login,
+  getUser,
 };

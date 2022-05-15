@@ -1,7 +1,7 @@
 const AUTH_ROUTES = {
   REGISTER: '/register',
   LOGIN: '/login',
-  GET_USER: '/get-user',
+  USER: '/get-user',
   LOGOUT: '/logout',
   FORGOT_PASSWORD: '/forgot_password',
   NEW_PASSWORD: '/new_password',
