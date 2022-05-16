@@ -11,7 +11,7 @@ const { upload } = require('../../../helpers/file/mutler.storage');
 const productRouter = express.Router();
 
 productRouter
-  .post(ROUTES.ROOT, [authUser, upload.array('productImages')], ProductController.createProduct);
+  .post(ROUTES.ROOT, [authUser, upload.fields([{ name: 'productImages1', maxCount: 1 }, { name: 'productImages2', maxCount: 1 }])], ProductController.createProduct);
 
 productRouter
   .put(withId(ROUTES.ROOT, 'pId'), authUser, ProductController.updateProduct);

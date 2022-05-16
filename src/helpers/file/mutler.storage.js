@@ -19,6 +19,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
+  onFileUploadStart: (file) => {
+    console.log(`${file.originalname} is starting ...`);
+  },
 });
 
 module.exports = { upload };
