@@ -1,5 +1,6 @@
 const RootService = require('./root.service');
 const CategoryModel = require('../database/models/category.model');
+const ProductService = require('./product.service');
 
 const create = async (catInfo) => {
   const newCat = new CategoryModel(catInfo);
@@ -33,6 +34,8 @@ const updateOne = async (catId, newInfo) => {
 const removeOne = async (catId) => {
   const cat = await getOne(catId);
   if (!cat) return null;
+  const associated = await ProductService.getAll({ categoryId: catId });
+  if (associated) return null;
   await CategoryModel.deleteOne({ _id: catId });
   return true;
 };

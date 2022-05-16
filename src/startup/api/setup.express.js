@@ -26,7 +26,9 @@ module.exports = (app) => {
   // SECURITY
 
   //  helmet for header security.
-  app.use(helmet());
+  app.use(helmet({
+    crossOriginIsolated: false,
+  }));
 
   //  strip any database related chars from requests for security.
   app.use(ExpressMongoSanitize());
