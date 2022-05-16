@@ -15,7 +15,13 @@ const createProduct = catchAsync(async (req, res) => {
     productInfo.ownerId = productInfo.ownerId[0] ? productInfo.ownerId[0] : productInfo.ownerId[1];
   }
 
-  console.log(productInfo);
+  if (req.files) {
+    productInfo.imgsLink = [
+      req.files.productImages1[0].filename,
+      req.files.productImages2[0].filename,
+    ];
+  }
+
   const product = await ProductService.create(productInfo);
 
   if (!product) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Product already exists');
