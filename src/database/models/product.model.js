@@ -97,8 +97,10 @@ const productSchema = new mongoose.Schema(
       }],
     },
 
-    ratingScore: Number,
-
+    ratingScore: {
+      type: Number,
+      default: 0,
+    },
     shippingCost: {
       type: Number,
       default: 0,
