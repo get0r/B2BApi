@@ -42,7 +42,7 @@ const updateCategory = catchAsync(async (req, res) => {
 
 const removeCategory = catchAsync(async (req, res) => {
   const removed = await CategoryService.removeOne(req.params.catId);
-
+  if (!removed) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Category associated with product or is parent!');
   return sendSuccessResponse(res, removed);
 });
 

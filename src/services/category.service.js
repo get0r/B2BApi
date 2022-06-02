@@ -35,7 +35,9 @@ const removeOne = async (catId) => {
   const cat = await getOne(catId);
   if (!cat) return null;
   const associated = await ProductService.getAll({ categoryId: catId });
-  if (associated) return null;
+  if (!associated.length) return null;
+  const isParent = await getAll({ parent: catId });
+  if (!isParent.length) return null;
   await CategoryModel.deleteOne({ _id: catId });
   return true;
 };

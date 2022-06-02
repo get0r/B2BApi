@@ -36,7 +36,7 @@ module.exports = (app) => {
   app.use(express.static(`${__dirname}/../../../public/uploads`));
 
   app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://10.42.0.35:3000', 'http://10.42.0.35:3001'],
     credentials: true,
   }));
 
