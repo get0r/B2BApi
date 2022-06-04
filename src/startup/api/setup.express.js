@@ -5,7 +5,6 @@ const ExpressMongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
-const path = require('path');
 
 const NotFoundError = require('../../helpers/error/NotFoundError');
 const errorHandler = require('../../api/middlewares/error/errorHandler');

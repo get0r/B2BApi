@@ -35,7 +35,7 @@ const login = catchAsync(async (req, res) => {
 
   const token = AuthServices.generateAuthToken(user._id, user.email, user.isAdmin ? 'admin' : 'business');
   //  place the token on the cookie and send the user
-  res.cookie('token', token, { httpOnly: false, secure: false, sameSite: false });
+  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: true });
   appLogger.info(`User login Successful userId ${user._id}`);
 
   return sendSuccessResponse(res, { ...user, token });
