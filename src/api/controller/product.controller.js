@@ -11,14 +11,10 @@ const {
 const createProduct = catchAsync(async (req, res) => {
   const productInfo = req.body;
 
-  if (productInfo.ownerId instanceof Array) {
-    productInfo.ownerId = productInfo.ownerId[0] ? productInfo.ownerId[0] : productInfo.ownerId[1];
-  }
-
   if (req.files) {
     productInfo.imgsLink = [
-      req.files.productImages1[0].filename,
-      req.files.productImages2[0].filename,
+      req.files.productImages1[0] && req.files.productImages1[0].filename,
+      req.files.productImages2[0] && req.files.productImages2[0].filename,
     ];
   }
 
