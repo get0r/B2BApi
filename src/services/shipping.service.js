@@ -1,6 +1,6 @@
 const RootServices = require('./root.service');
 // const BusinessService = require('./business.service');
-const OrderModel = require('../database/models/order.model');
+const ShippingModel = require('../database/models/shipping.model');
 // const ProductModel = require('../database/models/product.model');
 // const AdProductModel = require('../database/models/ad.orders.model');
 
@@ -12,23 +12,23 @@ const OrderModel = require('../database/models/order.model');
 //   return savedProduct;
 // };
 
-const getMyOrders = async (query = {}, sort = {}, page = 1) => {
-  const orders = await RootServices.getOperatedData(OrderModel, query, sort, page);
-  return orders;
+const getMyShippings = async (query = {}, sort = {}, page = 1) => {
+  const shippings = await RootServices.getOperatedData(ShippingModel, query, sort, page);
+  return shippings;
 };
 
 const getOne = async (oId) => {
-  const order = await OrderModel.findById(oId).lean();
+  const shipping = await ShippingModel.findById(oId).lean();
 
-  if (!order) return null;
-  return order;
+  if (!shipping) return null;
+  return shipping;
 };
 
 const updateOne = async (oId, newInfo) => {
   const order = await getOne(oId);
   if (!order) return null;
   const updateInfo = { ...order, ...newInfo };
-  await OrderModel.updateOne({ _id: oId }, updateInfo);
+  await ShippingModel.updateOne({ _id: oId }, updateInfo);
   return updateInfo;
 };
 
@@ -84,7 +84,7 @@ const updateOne = async (oId, newInfo) => {
 
 module.exports = {
 //   create,
-  getMyOrders,
+  getMyShippings,
   //   getOne,
   updateOne,
 //   getRecommendedorders,
