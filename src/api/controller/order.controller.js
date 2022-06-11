@@ -1,6 +1,4 @@
-const { stripeSecret } = require('../../config');
-const stripe = require('stripe')(stripeSecret);
-
+/* eslint-disable no-underscore-dangle */
 const {
   sendErrorResponse,
   HTTP_BAD_REQUEST,
@@ -9,39 +7,62 @@ const {
 
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const BusinessService = require('../../services/business.service');
+const TransactionService = require('../../services/transaction.service');
 const ProductService = require('../../services/product.service');
+const ShippingModel = require('../../database/models/shipping.model');
+const OrderModel = require('../../database/models/order.model');
 
 const create = catchAsync(async (req, res) => {
   const {
-    ordererId, productId, totalPayment, totalPrice, units, stripeToken,
+    ordererId, products, totalPrice, city, address1, address2,
   } = req.body;
   const business = await BusinessService.getOne(ordererId);
-  const product = await ProductService.getOne(productId);
+  if (!business) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Product or Business not found!');
 
-  if (!business || !product) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Product or Business not found!');
+  // TODO: For each ordered product
+  await products.forEach(async (product) => {
+    const orderedProduct = await ProductService.getOne(product._id);
+    // TODO: get all products substract numOfUnits updateMany
+    orderedProduct.inStock -= product.numOfUnits;
+    await ProductService.updateOne(product._id, orderedProduct);
 
-  console.log(stripeSecret);
-  const internalTotal = (product.unitPrice * units) + (product.unitPrice * units * 0.15);
-  if (internalTotal !== totalPrice) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'Price mismatch!');
+    // TODO: CREATE TRANSACTION
+    const transaction = {
+      from: ordererId,
+      amount: totalPrice,
+      paymentOption: 'Paypal',
+    };
+    const newTransaction = await TransactionService.create(transaction);
 
-  return stripe.customers.create({
-    name: business.name,
-    email: business.email,
-    // source: stripeToken,
-  })
-    .then((customer) => stripe.charges.create({
-      amount: totalPayment,
-      currency: 'usd',
-      customer: customer.id,
-    }))
-    .then((resS) => {
-      // TODO: CREATE TRANSACTION
-      // TODO: ASSOCIATE TRANSACTION ID WITH ORDER
-      // TODO: CREATE SHIPPING AND ASSOCIATE
-      // TODO: SAVE ORDER
-      sendSuccessResponse(res, resS);
-    })
-    .catch((err) => { throw err; });
+    // TODO: CREATE SHIPPING AND ASSOCIATE
+    const shipping = new ShippingModel({
+      from: product.ownerId,
+      to: ordererId,
+      destination: {
+        city,
+        address1,
+        address2,
+      },
+    });
+
+    const newShipping = await shipping.save();
+
+    // TODO: INITIALIZE ORDER DATA
+    // TODO: ASSOCIATE TRANSACTION, SHIPPING AND BUSINESS WITH ORDER
+    const newOrder = new OrderModel({
+      orderedFrom: product.ownerId,
+      orderedBy: ordererId,
+      product,
+      shippingId: newShipping._id,
+      totalPrice,
+      transactionId: newTransaction._id,
+    });
+
+    // TODO: SAVE ORDER
+    const savedOrder = newOrder.save();
+    console.log(savedOrder);
+  });
+  sendSuccessResponse(res, 'Products Ordered Successfully!');
 });
 
 // const getAllCategories = catchAsync(async (req, res) => {
