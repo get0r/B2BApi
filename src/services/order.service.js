@@ -1,7 +1,8 @@
-// const RootServices = require('./root.service');
-// const BusinessService = require('./business.service');
+const RootServices = require('./root.service');
+const BusinessService = require('./business.service');
+const OrderModel = require('../database/models/order.model');
 // const ProductModel = require('../database/models/product.model');
-// const AdProductModel = require('../database/models/ad.products.model');
+// const AdProductModel = require('../database/models/ad.orders.model');
 
 // const create = async (productInfo) => {
 //   const newProduct = new ProductModel(productInfo);
@@ -11,10 +12,10 @@
 //   return savedProduct;
 // };
 
-// const getAll = async (query = {}, sort = {}, page = 1) => {
-//   const products = await RootServices.getOperatedData(ProductModel, query, sort, page);
-//   return products;
-// };
+const getMyOrders = async (query = {}, sort = {}, page = 1) => {
+  const orders = await RootServices.getOperatedData(OrderModel, query, sort, page);
+  return orders;
+};
 
 // const getOne = async (bId) => {
 //   const product = await ProductModel.findById(bId).lean();
@@ -31,12 +32,12 @@
 //   return true;
 // };
 
-// const getRecommendedProducts = async (ownerId, sort = {}, page = 1) => {
+// const getRecommendedorders = async (ownerId, sort = {}, page = 1) => {
 //   const owner = await BusinessService.getOne(ownerId);
-//   const recommendedProducts = await RootServices
+//   const recommendedorders = await RootServices
 //     .getOperatedData(ProductModel, { categoryId: { $in: owner.tagIds } }, sort, page);
 
-//   return recommendedProducts;
+//   return recommendedorders;
 // };
 
 // const banUnbanOne = async (bId) => {
@@ -68,11 +69,11 @@
 //   return savedAdProduct;
 // };
 
-// const getAdProducts = async (page = 1) => {
-//   const adProducts = await RootServices
+// const getAdorders = async (page = 1) => {
+//   const adorders = await RootServices
 //     .getOperatedData(AdProductModel, {}, { priority: 1 }, page);
 
-//   return adProducts;
+//   return adorders;
 // };
 
 // const rateProduct = async (score, raterId) => {
@@ -81,14 +82,14 @@
 //   // TODO: calculate the average score and set ratingScore
 // };
 
-// module.exports = {
+module.exports = {
 //   create,
-//   getAll,
+  getMyOrders,
 //   getOne,
 //   updateOne,
-//   getRecommendedProducts,
+//   getRecommendedorders,
 //   banUnbanOne,
 //   setAdProduct,
-//   getAdProducts,
+//   getAdorders,
 //   removeOne,
-// };
+};

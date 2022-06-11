@@ -13,6 +13,9 @@ orderRouter
   .post(ROUTES.ROOT, authUser, OrderController.create);
 
 orderRouter
+  .get(ROUTES.ROOT, authUser, OrderController.getMyOrders);
+
+orderRouter
   .put(withId(ROUTES.ROOT, 'oId'), (req, res) => res.send(`${req.url} working!`));
 
 orderRouter
