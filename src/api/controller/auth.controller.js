@@ -15,7 +15,7 @@ const {
 const registerBusiness = catchAsync(async (req, res) => {
   const businessInfo = req.body;
   if (req.file) {
-    businessInfo.logoLink = req.file.path;
+    businessInfo.logoLink = req.file.filename;
   }
   const business = await AuthServices.register(businessInfo);
 

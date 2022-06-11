@@ -3,7 +3,9 @@ const express = require('express');
 const ProductController = require('../../controller/product.controller');
 // const AuthValidator = require('../../middlewares/validation/auth.validator');
 
-const { ROUTES, PRODUCT_ROUTES, withId } = require('../../../helpers/constants/route.constants');
+const {
+  ROUTES, PRODUCT_ROUTES, withId, BUSINESS_ROUTES,
+} = require('../../../helpers/constants/route.constants');
 const { authUser } = require('../../middlewares/auth/auth.middleware');
 const { upload } = require('../../../helpers/file/mutler.storage');
 // const { validateAsync } = require('../../middlewares/validation/joi.validator');
@@ -18,6 +20,9 @@ productRouter
 
 productRouter
   .get(withId(ROUTES.ROOT, 'pId'), ProductController.getProducts);
+
+productRouter
+  .get(withId(BUSINESS_ROUTES.BUSINESS, 'bId'), authUser, ProductController.getProducts);
 
 productRouter
   .post(`${withId(ROUTES.ROOT, 'pId')}/setAd`, authUser, ProductController.setProductAd);

@@ -32,7 +32,11 @@ const getProducts = catchAsync(async (req, res) => {
     if (!product) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'product not found!');
     return sendSuccessResponse(res, product);
   }
-  product = await ProductService.getAll(_.omit(req.query, ['sort', 'page']), req.query.sort, Number.parseInt(req.query.page, 10));
+  if (req.params.bId) {
+    product = await ProductService.getAll({ ..._.omit(req.query, ['sort', 'page']), ownerId: req.params.bId }, req.query.sort, Number.parseInt(req.query.page, 10));
+  } else {
+    product = await ProductService.getAll(_.omit(req.query, ['sort', 'page']), req.query.sort, Number.parseInt(req.query.page, 10));
+  }
 
   return sendSuccessResponse(res, product);
 });

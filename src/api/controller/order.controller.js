@@ -71,7 +71,13 @@ const getMyOrders = catchAsync(async (req, res) => {
   return sendSuccessResponse(res, orders);
 });
 
+const updateOrderStatus = catchAsync(async (req, res) => {
+  const updated = await OrderService.updateOne(req.params.oId, req.body);
+
+  return sendSuccessResponse(res, updated);
+});
 module.exports = {
   create,
   getMyOrders,
+  updateOrderStatus,
 };

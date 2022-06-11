@@ -17,20 +17,20 @@ const getMyOrders = async (query = {}, sort = {}, page = 1) => {
   return orders;
 };
 
-// const getOne = async (bId) => {
-//   const product = await ProductModel.findById(bId).lean();
+const getOne = async (oId) => {
+  const order = await OrderModel.findById(b = oId).lean();
 
-//   if (!product) return null;
-//   return product;
-// };
+  if (!order) return null;
+  return order;
+};
 
-// const updateOne = async (bId, newInfo) => {
-//   const product = await getOne(bId);
-//   if (!product) return null;
-//   const updateInfo = { ...product, ...newInfo };
-//   await ProductModel.updateOne({ _id: bId }, updateInfo);
-//   return true;
-// };
+const updateOne = async (oId, newInfo) => {
+  const order = await getOne(oId);
+  if (!order) return null;
+  const updateInfo = { ...order, ...newInfo };
+  await OrderModel.updateOne({ _id: oId }, updateInfo);
+  return updateInfo;
+};
 
 // const getRecommendedorders = async (ownerId, sort = {}, page = 1) => {
 //   const owner = await BusinessService.getOne(ownerId);
@@ -85,8 +85,8 @@ const getMyOrders = async (query = {}, sort = {}, page = 1) => {
 module.exports = {
 //   create,
   getMyOrders,
-//   getOne,
-//   updateOne,
+  //   getOne,
+  updateOne,
 //   getRecommendedorders,
 //   banUnbanOne,
 //   setAdProduct,

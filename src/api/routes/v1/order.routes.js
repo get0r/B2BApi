@@ -16,7 +16,7 @@ orderRouter
   .get(ROUTES.ROOT, authUser, OrderController.getMyOrders);
 
 orderRouter
-  .put(withId(ROUTES.ROOT, 'oId'), (req, res) => res.send(`${req.url} working!`));
+  .put(withId(ROUTES.ROOT, 'oId'), OrderController.updateOrderStatus);
 
 orderRouter
   .get(withId(ROUTES.ROOT, 'oId'), (req, res) => res.send(`${req.url} working!`));
