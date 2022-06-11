@@ -61,7 +61,7 @@ const create = catchAsync(async (req, res) => {
     // TODO: SAVE ORDER
     await newOrder.save();
   });
-  sendSuccessResponse(res, 'Products Ordered Successfully!');
+  return sendSuccessResponse(res, 'Products Ordered Successfully!');
 });
 
 const getMyOrders = catchAsync(async (req, res) => {
