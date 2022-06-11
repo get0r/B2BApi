@@ -7,6 +7,7 @@ const {
 
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const BusinessService = require('../../services/business.service');
+const OrderService = require('../../services/order.service');
 const TransactionService = require('../../services/transaction.service');
 const ProductService = require('../../services/product.service');
 const ShippingModel = require('../../database/models/shipping.model');
@@ -46,7 +47,6 @@ const create = catchAsync(async (req, res) => {
     });
 
     const newShipping = await shipping.save();
-
     // TODO: INITIALIZE ORDER DATA
     // TODO: ASSOCIATE TRANSACTION, SHIPPING AND BUSINESS WITH ORDER
     const newOrder = new OrderModel({
@@ -59,19 +59,19 @@ const create = catchAsync(async (req, res) => {
     });
 
     // TODO: SAVE ORDER
-    const savedOrder = newOrder.save();
-    console.log(savedOrder);
+    await newOrder.save();
   });
   sendSuccessResponse(res, 'Products Ordered Successfully!');
 });
 
-// const getAllCategories = catchAsync(async (req, res) => {
-//   const categories = await CategoryService.getAll();
+const getMyOrders = catchAsync(async (req, res) => {
+  const query = { $or: [{ orderedBy: req.userId }, { orderedFrom: req.userId }] };
+  const orders = await OrderService.getMyOrders(query);
 
-//   return sendSuccessResponse(res, categories);
-// });
+  return sendSuccessResponse(res, orders);
+});
 
 module.exports = {
   create,
-  // getAllCategories,
+  getMyOrders,
 };
