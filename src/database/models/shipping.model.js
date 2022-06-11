@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const shippingSchema = new mongoose.Schema({
-  orderId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Order',
-    required: true,
-  },
 
   status: {
     type: String,
@@ -34,15 +29,13 @@ const shippingSchema = new mongoose.Schema({
   departure: {
     city: String,
     address1: String,
-    lat: String,
-    long: String,
+    address2: String,
   },
 
   destination: {
     city: String,
     address1: String,
-    lat: String,
-    long: String,
+    address2: String,
   },
 
   returnStatus: {

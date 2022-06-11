@@ -13,16 +13,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
 
-  noOfUnits: {
-    type: Number,
-    required: true,
-  },
-
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true,
-  },
+  product: {},
 
   shippingId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -30,37 +21,10 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
 
-  pricePerUnit: {
-    type: Number,
-    required: true,
-  },
-
   totalPrice: {
     type: Number,
     required: true,
   },
-
-  tax: {
-    type: Number,
-    required: true,
-  },
-
-  totalPayment: {
-    type: Number,
-    required: true,
-  },
-
-  isPaid: {
-    type: Boolean,
-    default: false,
-  },
-
-  paymentOption: {
-    type: String,
-    enum: ['Bank', 'Credit Card', 'Paypal'],
-    required: true,
-  },
-
   transactionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Transaction',
@@ -86,8 +50,6 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-
-  returnPrice: Number,
 
 });
 
