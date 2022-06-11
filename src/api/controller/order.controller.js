@@ -23,6 +23,7 @@ const create = catchAsync(async (req, res) => {
   // TODO: For each ordered product
   await products.forEach(async (product) => {
     const orderedProduct = await ProductService.getOne(product._id);
+    const productOwner = await BusinessService.getOne(orderedProduct.ownerId);
     // TODO: get all products substract numOfUnits updateMany
     orderedProduct.inStock -= product.numOfUnits;
     await ProductService.updateOne(product._id, orderedProduct);
@@ -39,6 +40,11 @@ const create = catchAsync(async (req, res) => {
     const shipping = new ShippingModel({
       from: product.ownerId,
       to: ordererId,
+      departure: {
+        city: productOwner.city,
+        address1: productOwner.address1,
+        address2: productOwner.address2,
+      },
       destination: {
         city,
         address1,

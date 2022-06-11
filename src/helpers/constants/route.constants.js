@@ -30,7 +30,7 @@ const ORDER_ROUTES = {
 };
 
 const SHIPPING_ROUTES = {
-  SHIPPING: '/shipping',
+  SHIPPING: '/shippings',
 };
 
 const TRANSACTION_ROUTES = {
