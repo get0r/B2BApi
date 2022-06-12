@@ -13,8 +13,13 @@ const createCategory = catchAsync(async (req, res) => {
   const catInfo = req.body;
   if (!catInfo.parent && !(req.role === 'admin')) sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'Only admin can create general categories!');
 
-  const parentCat = await CategoryService.getOne(catInfo.parent);
-  catInfo.path = parentCat.path ? `${parentCat.path}/${catInfo.name}` : catInfo.name;
+  if (catInfo.parent) {
+    const parentCat = await CategoryService.getOne(catInfo.parent);
+    catInfo.path = parentCat.path ? `${parentCat.path}/${catInfo.name}` : catInfo.name;
+  } else {
+    catInfo.path = catInfo.name;
+    catInfo.parent = null;
+  }
   const cat = await CategoryService.create(catInfo);
 
   if (!cat) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'category already exists');

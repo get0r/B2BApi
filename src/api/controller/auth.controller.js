@@ -12,7 +12,8 @@ const {
   HTTP_UNAUTHORIZED_ACCESS,
 } = require('../../utils/httpResponse');
 const AdminModel = require('../../database/models/admin.model');
-const { hashString } = require('../../utils/hashGenerator');
+// const AdminModel = require('../../database/models/admin.model');
+// const { hashString } = require('../../utils/hashGenerator');
 
 const registerBusiness = catchAsync(async (req, res) => {
   const businessInfo = req.body;
@@ -64,7 +65,8 @@ const adminLogin = catchAsync(async (req, res) => {
 
 const getUser = catchAsync(async (req, res) => {
   const { userId } = req;
-  const user = await BusinessService.getOne(userId);
+  let user = await BusinessService.getOne(userId);
+  if (!user) user = await AdminModel.findById(userId);
 
   return sendSuccessResponse(res, user);
 });
