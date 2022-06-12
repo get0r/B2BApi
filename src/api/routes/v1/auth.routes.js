@@ -18,6 +18,9 @@ authRouter
   .post(AUTH_ROUTES.LOGIN, validateAsync(loginSchema), AuthController.login);
 
 authRouter
+  .post(AUTH_ROUTES.ADMIN_LOGIN, validateAsync(loginSchema), AuthController.adminLogin);
+
+authRouter
   .get(AUTH_ROUTES.USER, authUser, AuthController.getUser);
 
 module.exports = authRouter;

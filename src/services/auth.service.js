@@ -22,8 +22,9 @@ const register = async (businessInfo) => {
   return savedBusiness;
 };
 
-const loginUser = async ({ email, password }) => {
-  let user = await BusinessModel.findOne({ email }).lean();
+const loginUser = async ({ email, password }, admin) => {
+  let user = admin ? await AdminModel.findOne({ email }).lean()
+    : await BusinessModel.findOne({ email }).lean();
   //   user doesn't exist so stop proceeding.
   if (!user) {
     user = await AdminModel.findOne({ email }).lean();
@@ -44,6 +45,7 @@ const resetPassword = async (userId, newPassword) => {
   if (!user) return null;
   const hashedPassword = await hashString(newPassword, 10);
   user.password = hashedPassword;
+  // eslint-disable-next-line no-underscore-dangle
   await BusinessModel.updateOne({ _id: user._id }, user);
   return true;
 };
