@@ -14,11 +14,11 @@ const { sendErrorResponse, HTTP_UNAUTHORIZED_ACCESS } = require('../../../utils/
  * @returns the result of the next endpoint function
  */
 const authUser = catchAsync(async (req, res, next) => {
-  const { token } = req.cookies;
+  const { token, tokenLocal } = req.cookies;
 
-  if (!token) return sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'Sign in first!');
+  if (!token && !tokenLocal) return sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'Sign in first!');
 
-  const verifiedUser = await JWT.verify(token, tokenSecret);
+  const verifiedUser = await JWT.verify(token || tokenLocal, tokenSecret);
   if (!verifiedUser) return sendErrorResponse(res, HTTP_UNAUTHORIZED_ACCESS, 'Unauthorized Access.');
 
   req.userId = verifiedUser.id;

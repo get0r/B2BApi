@@ -2,6 +2,7 @@ const RootServices = require('./root.service');
 const BusinessService = require('./business.service');
 const ProductModel = require('../database/models/product.model');
 const AdProductModel = require('../database/models/ad.products.model');
+const OrderModel = require('../database/models/order.model');
 
 const create = async (productInfo) => {
   const newProduct = new ProductModel(productInfo);
@@ -76,9 +77,17 @@ const getAdProducts = async (page = 1) => {
 };
 
 const rateProduct = async (productId, score, raterId) => {
-  // TODO: get last order id if not found return null
-  // TODO: set to db rating
-  // TODO: calculate the average score and set ratingScore
+  const lastOrder = await OrderModel.findOne({ orderedId: raterId, 'product._id': productId });
+  if (!lastOrder) return null;
+  const product = await getOne(productId);
+  await ProductModel.updateOne({ _id: productId }, { $push: { rating: { raterId, score } } });
+  const productD = await getOne(productId);
+
+  const ratingScore = productD.rating.reduce((s, rate) => s + rate.score, 0)
+  / product.rating.length;
+
+  const finalProduct = await updateOne(productId, { ratingScore });
+  return finalProduct;
 };
 
 module.exports = {

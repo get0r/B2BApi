@@ -90,11 +90,8 @@ const productSchema = new mongoose.Schema(
     variants: [{ type: String, imgIndex: Number }],
 
     rating: {
-      info: [{
-        score: Number,
-        rater: mongoose.Schema.Types.ObjectId,
-        lastOrder: mongoose.Schema.Types.ObjectId,
-      }],
+      type: Array,
+      default: [],
     },
 
     ratingScore: {

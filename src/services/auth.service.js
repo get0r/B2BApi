@@ -9,10 +9,11 @@ const BusinessModel = require('../database/models/business.model');
 const { hashString, compareHash } = require('../utils/hashGenerator');
 
 const register = async (businessInfo) => {
-  const { email, password } = businessInfo;
+  const { email, password, tinNo } = businessInfo;
 
   const businessExists = await BusinessModel.findOne({ email }).lean();
-  if (businessExists) return null;
+  const businessExists2 = await BusinessModel.findOne({ tinNo }).lean();
+  if (businessExists || businessExists2) return null;
 
   const hashedPassword = await hashString(password, 10);
   const newBusiness = new BusinessModel({ ...businessInfo, password: hashedPassword });
