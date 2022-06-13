@@ -26,6 +26,8 @@ const create = catchAsync(async (req, res) => {
     const productOwner = await BusinessService.getOne(orderedProduct.ownerId);
     // TODO: get all products substract numOfUnits updateMany
     orderedProduct.inStock -= product.numOfUnits;
+    productOwner.availableBalance += product.totalPrice - (product.totalPrice * 0.05);
+    await BusinessService.updateOne(productOwner._id, productOwner);
     await ProductService.updateOne(product._id, orderedProduct);
 
     // TODO: CREATE TRANSACTION

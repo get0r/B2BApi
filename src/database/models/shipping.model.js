@@ -5,7 +5,7 @@ const shippingSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Processing', 'Moving', 'Stopped', 'Reached'],
-    default: 'Moving',
+    default: 'Processing',
   },
 
   from: {
