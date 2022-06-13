@@ -42,4 +42,7 @@ productRouter
 productRouter
   .post(withId(PRODUCT_ROUTES.RATE, 'pId'), ProductController.rateProduct);
 
+productRouter
+  .put(withId('/report', 'pId'), authUser, ProductController.reportProduct);
+
 module.exports = productRouter;

@@ -16,7 +16,6 @@ const getBusiness = catchAsync(async (req, res) => {
     return sendSuccessResponse(res, business);
   }
   business = await BusinessService.getAll(_.omit(req.query, ['sort', 'page']), req.query.sort, Number.parseInt(req.query.page, 10));
-
   return sendSuccessResponse(res, business);
 });
 

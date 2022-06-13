@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const ProductReportModel = require('../../database/models/product.report.model');
 const catchAsync = require('../../helpers/error/catchAsyncError');
 const ProductService = require('../../services/product.service');
 
@@ -79,10 +80,20 @@ const getAdProducts = catchAsync(async (req, res) => {
 });
 
 const rateProduct = catchAsync(async (req, res) => {
-  const rated = await ProductService.rateProduct(req.params.pId, req.body.raterId, req.body.score);
-  if (!rated) sendErrorResponse(res, HTTP_BAD_REQUEST, 'Product not found!');
+  const rated = await ProductService.rateProduct(req.params.pId, req.body.score, req.body.raterId);
+  if (!rated) return sendErrorResponse(res, HTTP_BAD_REQUEST, 'You must have purchase history first and can\'t rate again!');
 
   return sendSuccessResponse(res, rated);
+});
+
+const reportProduct = catchAsync(async (req, res) => {
+  const report = new ProductReportModel({
+    reporter: req.userId,
+    productId: req.params.pId,
+  });
+  await report.save();
+
+  return sendSuccessResponse(res, report);
 });
 
 module.exports = {
@@ -95,4 +106,5 @@ module.exports = {
   getRecommendedProducts,
   getAdProducts,
   rateProduct,
+  reportProduct,
 };

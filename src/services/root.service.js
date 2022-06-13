@@ -22,15 +22,11 @@ const getOperatedData = async (DBmodel, query = {}, sort = {}, page = 1) => {
     const fieldAdd = { score: { $meta: 'textScore' } };
     finalQuery = _.omit(query, ['q']);
     data = await DBmodel.find({ ...searchQuery, ...finalQuery }, fieldAdd)
-      .skip(skip)
       .sort(finalSort)
-      .limit(PAGE_SIZE)
       .lean();
   } else {
     data = await DBmodel.find(finalQuery)
-      .skip(skip)
       .sort(finalSort)
-      .limit(PAGE_SIZE)
       .lean();
   }
 

@@ -8,23 +8,15 @@ const productReportSchema = new mongoose.Schema({
   reason: {
     type: String,
     enum: ['Fake', 'Not Exact', 'Quality Problem'],
-    required: true,
+    default: 'Quality Problem',
   },
 
   productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    type: Object,
   },
 
-  reportedDate: {
-    type: Date,
-    default: new Date(),
-  },
-
-  lastOrder: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
+}, {
+  timestamps: true,
 });
 
 const ProductReportModel = mongoose.model('productReport', productReportSchema);

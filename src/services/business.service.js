@@ -3,6 +3,7 @@ const BusinessModel = require('../database/models/business.model');
 
 const getAll = async (query = {}, sort = {}, page = 1) => {
   const businesses = await RootServices.getOperatedData(BusinessModel, query, sort, page);
+
   return businesses;
 };
 

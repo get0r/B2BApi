@@ -79,14 +79,18 @@ const getAdProducts = async (page = 1) => {
 const rateProduct = async (productId, score, raterId) => {
   const lastOrder = await OrderModel.findOne({ orderedId: raterId, 'product._id': productId });
   if (!lastOrder) return null;
+
   const product = await getOne(productId);
+  if (product.rating.find((r) => r.raterId === raterId)) return null;
+
   await ProductModel.updateOne({ _id: productId }, { $push: { rating: { raterId, score } } });
   const productD = await getOne(productId);
 
-  const ratingScore = productD.rating.reduce((s, rate) => s + rate.score, 0)
-  / product.rating.length;
+  let ratingScore = 0;
+  productD.rating.forEach((rate) => ratingScore += rate.score);
+  const finalScore = ratingScore / productD.rating.length;
 
-  const finalProduct = await updateOne(productId, { ratingScore });
+  const finalProduct = await updateOne(productId, { ratingScore: finalScore });
   return finalProduct;
 };
 
