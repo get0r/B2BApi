@@ -16,6 +16,9 @@ productRouter
   .post(ROUTES.ROOT, [authUser, upload.fields([{ name: 'productImages1', maxCount: 1 }, { name: 'productImages2', maxCount: 1 }])], ProductController.createProduct);
 
 productRouter
+  .get(PRODUCT_ROUTES.REC_PRODUCTS, authUser, ProductController.getRecommendedProducts);
+
+productRouter
   .put(withId(ROUTES.ROOT, 'pId'), authUser, ProductController.updateProduct);
 
 productRouter
@@ -29,9 +32,6 @@ productRouter
 
 productRouter
   .delete(withId(ROUTES.ROOT, 'pId'), authUser, ProductController.removeProduct);
-
-productRouter
-  .get(PRODUCT_ROUTES.REC_PRODUCTS, authUser, ProductController.getRecommendedProducts);
 
 productRouter
   .get(ROUTES.ROOT, ProductController.getProducts);
