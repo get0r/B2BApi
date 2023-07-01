@@ -1,7 +1,5 @@
 # Business 2 Business E-commerce API
 
-Basic Node/Express Restful API project boilerplate
-
 ### Environment Variables List
 
 #### DB_URI=
